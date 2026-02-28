@@ -1,5 +1,9 @@
 # Brave Search Script
 
+**Version:** 1.0.0  
+**Last Updated:** 2026-02-28  
+**License:** MIT
+
 A Python script that performs Brave Search queries from the command line and prints results to stdout.
 
 ## Features
