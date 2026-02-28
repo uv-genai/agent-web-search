@@ -540,7 +540,6 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```bash
 # Install dependencies for both tools
 pip install -r requirements.txt
-pip install -r requirements_linkup.txt
 ```
 
 ### Step 3: Configure API Keys
@@ -834,7 +833,7 @@ python test_ai_search_skill.py
 ### Before Using the Tools
 - [ ] `BRAVE_API_KEY` environment variable is set
 - [ ] `LINKUP_API_KEY` environment variable is set
-- [ ] Dependencies are installed (`pip install -r requirements*.txt`)
+- [ ] Dependencies are installed (`pip install -r requirements.txt`)
 - [ ] Virtual environment is activated
 - [ ] Internet connection is working
 - [ ] API keys are valid (check dashboards)
