@@ -1,6 +1,6 @@
-# Brave Search Script - Project Documentation
+# Web Search Scripts - Project Documentation
 
-**Version:** 1.0.0  
+**Version:** 2.0.0  
 **Last Updated:** 2026-02-28  
 **License:** MIT
 
@@ -8,44 +8,97 @@
 
 ## 📋 Project Description
 
-A Python-based web search tool that uses the Brave Search API to perform privacy-focused searches with flexible output options for both humans and coding agents.
+A comprehensive Python-based web search toolkit providing two powerful search tools for different use cases:
 
-### Key Features
+### 🔹 Brave Search Script (`search.py`)
+Privacy-focused search using Brave's independent search index. Perfect for simple queries, fast results, and privacy-conscious users.
 
-- **Command-line interface** with intuitive arguments
-- **Customizable result count** using `-n` or `--num-results` flag (1-100 results)
-- **JSON output mode** for coding agents using `--json` flag
-- **Brave Search API** integration for reliable, fast results
-- **Privacy-focused** - uses Brave's independent search index
-- **Clean output** - formatted titles, URLs, and descriptions for human readability
-- **Machine-readable output** - structured JSON for programmatic use
-
-### Target Users
-
-- Developers building search integrations
-- AI agents and automation workflows
-- Researchers needing quick information gathering
-- Content creators requiring source verification
-- Anyone preferring privacy-focused search over Google
+### 🔹 Linkup Search Script (`linkup_search.py`)
+AI-specific agentic search with superior factuality (#1 on SimpleQA benchmark). Ideal for complex research, factual accuracy, and content extraction.
 
 ---
 
-## 🎯 Design Decisions
+## 🎯 Key Features
 
-### Why Brave Search API?
+### Brave Search Script
+- ✅ **Command-line interface** with intuitive arguments
+- ✅ **Customizable result count** (1-100 results)
+- ✅ **JSON output mode** for coding agents
+- ✅ **Brave Search API** integration
+- ✅ **Privacy-focused** - independent index, no tracking
+- ✅ **Fast responses** (~1-3 seconds)
+- ✅ **Free tier**: 2,000 queries/month
 
-1. **Reliability**: No browser automation issues like Selenium
-2. **Speed**: Fast API responses (~1-3 seconds)
-3. **Scalability**: Handle hundreds of queries per hour
-4. **Privacy**: Independent index, no tracking or profiling
-5. **Cost**: Free tier includes 2,000 queries/month
-6. **Simplicity**: Lightweight requests-based implementation
+### Linkup Search Script
+- ✅ **Agentic search** with deep research capability
+- ✅ **Superior factuality** - SOTA performance
+- ✅ **Multiple output types** (searchResults, sourcedAnswer, structured)
+- ✅ **Built-in content fetching** (/fetch endpoint)
+- ✅ **JavaScript rendering** support
+- ✅ **Advanced filtering** (dates, domains)
+- ✅ **Markdown extraction** from web pages
+
+### Shared Features
+- ✅ Environment variable authentication
+- ✅ Comprehensive error handling
+- ✅ Timeout protection
+- ✅ Input validation
+- ✅ Dual output modes (text + JSON)
+- ✅ Multi-word query support
+
+---
+
+## 🆚 Feature Comparison
+
+| Feature | Brave Search | Linkup Search |
+|---------|-------------|---------------|
+| Search Mode | ✅ Yes | ✅ Yes |
+| Content Fetching | ❌ No | ✅ Yes |
+| Output Types | Basic | 3 types |
+| Deep Research | ❌ No | ✅ Yes |
+| Date Filtering | ✅ Yes | ✅ Yes |
+| Domain Filtering | ✅ Yes | ✅ Yes |
+| JavaScript Render | ❌ No | ✅ Yes |
+| Markdown Output | ❌ No | ✅ Yes |
+| Factuality | Good | ⭐ SOTA |
+| Free Tier | 2,000/mo | Available |
+| Speed | Fast | Fast/Deep |
+
+---
+
+## 🎯 When to Use Each
+
+### Choose Brave Search When:
+- Privacy is the primary concern
+- Queries are straightforward
+- Need fast, basic results
+- No budget for API calls
+- Simple citation needs
+
+### Choose Linkup Search When:
+- Building AI applications
+- Need highly factual responses
+- Complex research questions
+- Want natural language answers
+- Need to fetch webpage content
+- Require structured data extraction
+
+---
+
+## 🏗️ Design Decisions
+
+### Why Two Separate Scripts?
+
+1. **Different Use Cases**: Brave excels at quick, private searches; Linkup shines in AI/factual scenarios
+2. **API Specialization**: Each service has unique strengths optimized for different workflows
+3. **Cost Efficiency**: Users can choose the right tool without paying for unused features
+4. **Flexibility**: Developers can integrate both for maximum coverage
 
 ### Architecture Choices
 
-**Single-file design**: The main script (`search.py`) is self-contained with all functionality in one file for easy maintenance and deployment.
+**Single-file design**: Both main scripts are self-contained with all functionality in one file for easy maintenance and deployment.
 
-**Environment variable authentication**: API key stored in `BRAVE_API_KEY` environment variable for security and flexibility across different environments.
+**Environment variable authentication**: API keys stored in `BRAVE_API_KEY` and `LINKUP_API_KEY` environment variables for security and flexibility.
 
 **Dual output modes**: Both human-readable text and machine-readable JSON outputs serve different use cases without code duplication.
 
@@ -66,20 +119,27 @@ A Python-based web search tool that uses the Brave Search API to perform privacy
 
 ```
 ws/
-├── search.py              # Main script (all features)
-├── requirements.txt       # Dependencies
-├── README.md             # User documentation
-├── AGENTS.md             # Project documentation (this file)
-├── EXAMPLE_JSON_OUTPUT.md # JSON usage examples
-├── FEATURES_SUMMARY.md   # Complete feature guide
-├── test_json_output.py   # Demo/test script
-└── venv/                 # Virtual environment
+├── search.py                 # Brave Search main script
+├── linkup_search.py          # Linkup Search main script
+├── requirements.txt          # Brave Search dependencies
+├── requirements_linkup.txt   # Linkup Search dependencies
+├── README.md                 # Main documentation
+├── README_LINKUP.md          # Linkup detailed docs
+├── AGENTS.md                 # Project documentation (this file)
+├── FEATURES_SUMMARY.md       # Brave Search features
+├── FEATURES_LINKUP.md        # Linkup Search features
+├── PROJECT_SUMMARY.md        # Project overview
+├── EXAMPLE_JSON_OUTPUT.md    # JSON usage examples
+├── FIX_APPLIED.md            # Bug fix documentation
+├── test_json_output.py       # Brave Search test script
+├── test_linkup.py            # Linkup Search test script
+├── test_linkup_api.py        # Linkup diagnostic tool
+└── venv/                     # Virtual environment
 ```
 
-### Core Components
+### Brave Search Core Components
 
 #### 1. Argument Parsing (`parse_arguments()`)
-
 ```python
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -90,68 +150,47 @@ def parse_arguments():
     parser.add_argument('--json', action='store_true', help='JSON output')
 ```
 
-**Features**:
-- Supports multi-word queries via `nargs='+'`
-- Validates result count range (1-100)
-- Boolean flag for JSON mode
-
 #### 2. API Integration (`brave_search()`)
-
 ```python
 def brave_search(query, num_results, json_output=False):
     # Makes request to Brave Search API
-    # Handles both text and JSON output formats
+    # Endpoint: https://api.search.brave.com/res/v1/web/search
+    # Headers include X-Subscription-Token
     # Comprehensive error handling
 ```
 
-**Key aspects**:
-- Uses Brave Search API endpoint: `https://api.search.brave.com/res/v1/web/search`
-- Implements proper headers including `X-Subscription-Token`
-- Timeout protection (30 seconds)
-- Error responses in both formats
+### Linkup Search Core Components
 
-#### 3. Output Formatting
-
-**Human-readable format**:
-```
-============================================================
-Brave Search Results for: python web scraping
-Showing 5 results
-============================================================
-
-1. GeeksforGeeks
-   URL: https://...
-   Description: Learn Python web scraping...
+#### 1. Search Mode (`linkup_search()`)
+```python
+def linkup_search(query, num_results=10, depth='standard', 
+                  output_type='searchResults', ...):
+    # Uses /v1/search endpoint
+    # Supports standard and deep depths
+    # Multiple output types: searchResults, sourcedAnswer, structured
+    # Advanced filtering: dates, domains
 ```
 
-**JSON format**:
-```json
-{
-  "query": "python web scraping",
-  "num_results_requested": 5,
-  "num_results_found": 42,
-  "results": [
-    {
-      "title": "GeeksforGeeks",
-      "url": "https://...",
-      "description": "...",
-      "engine": "brave_search"
-    }
-  ]
-}
+#### 2. Fetch Mode (`linkup_fetch()`)
+```python
+def linkup_fetch(url, output_format='markdown', render_js=False):
+    # Uses /v1/fetch endpoint
+    # Extracts HTML or Markdown content
+    # Optional JavaScript rendering
+    # Clean content extraction
 ```
 
 ### Error Handling Strategy
 
 1. **API errors**: Status codes captured and reported with details
-2. **Timeout errors**: 30-second timeout prevents hanging
+2. **Timeout errors**: 30-60 second timeout prevents hanging
 3. **Network errors**: Request exceptions caught and reported
 4. **JSON errors**: Structured error objects in JSON mode
 5. **Input validation**: Result count bounds checked before API call
 
 ### Security Considerations
 
-- API key never hardcoded (environment variable only)
+- API keys never hardcoded (environment variables only)
 - No user data collected or stored
 - HTTPS-only communications
 - Input sanitization via argparse
@@ -160,6 +199,81 @@ Showing 5 results
 ---
 
 ## 📝 Changelog
+
+### Version 2.0.0 (2026-02-28)
+
+**Major Update: Added Linkup Search Script & Fixed Critical Bug**
+
+#### Added
+- ✅ **Linkup Search Script** (`linkup_search.py`)
+  - Agentic search with deep research capability
+  - Search and fetch endpoints
+  - Multiple output types (searchResults, sourcedAnswer, structured)
+  - JavaScript rendering support
+  - Date and domain filtering
+  - Markdown extraction
+- ✅ **Documentation Updates**
+  - `README_LINKUP.md` - Detailed Linkup documentation
+  - `FEATURES_LINKUP.md` - Linkup feature guide
+  - `PROJECT_SUMMARY.md` - Combined project overview
+  - `FEATURES_LINKUP.md` - Comprehensive feature comparison
+- ✅ **Testing Tools**
+  - `test_linkup.py` - Linkup demo script
+  - `test_linkup_api.py` - Diagnostic tool
+- ✅ **Bug Fix**
+  - Fixed response parsing in Linkup script (results vs sources key)
+  - Verified all search operations working correctly
+
+#### Improved
+- ✅ **Updated README.md** to include both scripts
+- ✅ **Enhanced error handling** in Linkup script
+- ✅ **Added comprehensive documentation** for Linkup features
+- ✅ **Created diagnostic tools** for troubleshooting
+
+#### Technical Specifications
+
+**Brave Search Script**:
+- **Language**: Python 3.7+
+- **Dependencies**: requests, argparse, json (stdlib)
+- **API**: Brave Search API (free tier: 2,000 queries/month)
+- **Output formats**: Text (human), JSON (machine)
+- **Result limit**: 1-100 results per query
+- **Timeout**: 30 seconds
+
+**Linkup Search Script**:
+- **Language**: Python 3.7+
+- **Dependencies**: requests, argparse, json (stdlib)
+- **API**: Linkup API (https://app.linkup.so/)
+- **Endpoints**: /v1/search, /v1/fetch
+- **Output formats**: Text, JSON, Markdown
+- **Search depths**: Standard, Deep
+- **Output types**: searchResults, sourcedAnswer, structured
+- **Timeout**: 60 seconds
+
+#### New Use Cases Enabled
+- AI agent integrations requiring high-factuality responses
+- Research assistants with deep search capabilities
+- Content aggregation with page fetching
+- Competitive analysis with domain filtering
+- Fact-checking with cited sources
+- Chatbot enhancements with grounded responses
+- Web scraping with JavaScript rendering
+
+#### Files Created (v2.0.0)
+- `linkup_search.py` - Main Linkup executable script
+- `requirements_linkup.txt` - Linkup dependency specification
+- `README_LINKUP.md` - Linkup user documentation
+- `FEATURES_LINKUP.md` - Linkup feature guide
+- `PROJECT_SUMMARY.md` - Combined project summary
+- `test_linkup.py` - Linkup demonstration script
+- `test_linkup_api.py` - Linkup diagnostic tool
+- `FIX_APPLIED.md` - Bug fix documentation
+
+#### Files Modified (v2.0.0)
+- `AGENTS.md` - Updated with both scripts documentation
+- `README.md` - Added Linkup script section
+- `FEATURES_SUMMARY.md` - Added comparative analysis
+- `.gitignore` - Updated for new files
 
 ### Version 1.0.0 (2026-02-28)
 
@@ -180,60 +294,86 @@ Showing 5 results
 - ✅ Test scripts for demonstration
 - ✅ MIT License
 
-#### Technical Specifications
-- **Language**: Python 3.7+
-- **Dependencies**: requests, argparse, json (stdlib)
-- **API**: Brave Search API (free tier: 2,000 queries/month)
-- **Output formats**: Text (human), JSON (machine)
-- **Result limit**: 1-100 results per query
-- **Timeout**: 30 seconds
-- **Error handling**: Comprehensive with dual-format reporting
-
-#### Use Cases Enabled
-- AI agent integrations (LangChain, CrewAI, AutoGen)
-- Shell script automation with jq/grep
-- Python/Node.js application integration
-- Research and content creation workflows
-- Privacy-focused web searching
-
-#### Files Created
-- `search.py` - Main executable script
-- `requirements.txt` - Dependency specification
-- `README.md` - User documentation
-- `AGENTS.md` - Project documentation
-- `EXAMPLE_JSON_OUTPUT.md` - JSON usage guide
-- `FEATURES_SUMMARY.md` - Complete feature list
-- `test_json_output.py` - Demonstration script
-
 ---
 
 ## 🚀 Quick Start
+
+### Setup Both Scripts
 
 ```bash
 # 1. Setup virtual environment
 python3 -m venv venv
 source venv/bin/activate
 
-# 2. Install dependencies
+# 2. Install dependencies for both scripts
 pip install -r requirements.txt
+pip install -r requirements_linkup.txt
 
-# 3. Get API key from https://api-dashboard.search.brave.com/
-export BRAVE_API_KEY="your-api-key-here"
-
-# 4. Run searches
-python search.py "python web scraping" -n 5                    # Human-readable
-python search.py "machine learning" --json                     # JSON output
-python search.py "web development" -n 10 --json                # Both options
+# 3. Get API keys
+export BRAVE_API_KEY="your-brave-api-key-here"
+export LINKUP_API_KEY="your-linkup-api-key-here"
 ```
+
+### Brave Search Usage
+
+```bash
+# Basic search
+python search.py "python web scraping" -n 5
+
+# JSON output
+python search.py "machine learning" --json
+
+# With specific count
+python search.py "web development" -n 10 --json
+```
+
+### Linkup Search Usage
+
+```bash
+# Basic search
+python linkup_search.py search "open source licenses" -n 5
+
+# Deep research
+python linkup_search.py search "AI trends 2026" --depth deep -n 10
+
+# JSON output
+python linkup_search.py search "python tutorials" -n 5 --json
+
+# Fetch webpage content
+python linkup_search.py fetch "https://docs.python.org"
+
+# With filters
+python linkup_search.py search "machine learning" \
+  --from-date 2026-01-01 \
+  --include-domains arxiv.org \
+  -n 10
+```
+
+---
+
+## 📊 Performance Metrics
+
+| Metric | Brave Search | Linkup Search |
+|--------|-------------|---------------|
+| Response Time (standard) | ~1-3s | ~1-3s |
+| Response Time (deep) | N/A | ~5-10s |
+| Factuality Score | Good | SOTA (#1) |
+| Citation Quality | Good | Excellent |
+| Complex Query Handling | Moderate | Excellent |
+| Content Extraction | None | Full page fetch |
 
 ---
 
 ## 📚 Additional Resources
 
 - [Brave Search API Documentation](https://api-dashboard.search.brave.com/documentation)
+- [Linkup API Documentation](https://docs.linkup.so/pages/documentation/api-reference)
 - [Example JSON Output Guide](./EXAMPLE_JSON_OUTPUT.md)
-- [Feature Summary](./FEATURES_SUMMARY.md)
+- [Brave Search Features](./FEATURES_SUMMARY.md)
+- [Linkup Search Features](./FEATURES_LINKUP.md)
+- [Project Overview](./PROJECT_SUMMARY.md)
 - [User Documentation](./README.md)
+- [Linkup User Docs](./README_LINKUP.md)
 
 ---
 
