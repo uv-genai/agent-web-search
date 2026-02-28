@@ -22,7 +22,7 @@ Both tools output **machine-readable JSON** (or human-readable text) which downs
 
 ### Command
 ```bash
-python search.py "<query>" [-n <N>] [--json]
+python brave_search.py "<query>" [-n <N>] [--json]
 ```
 * `<query>` – the search string (use quotes for multi-word queries).
 * `-n <N>` – number of results to return (default: 10, range: 1-100).
@@ -50,13 +50,13 @@ Each object represents a search result with title, URL, description, and engine 
 ### Example Usage
 ```bash
 # Basic search with human-readable output
-python search.py "python web scraping tutorial" -n 5
+python brave_search.py "python web scraping tutorial" -n 5
 
 # Get structured JSON for processing
-python search.py "FastAPI dependency injection documentation" --json
+python brave_search.py "FastAPI dependency injection documentation" --json
 
 # Combine options for maximum control
-python search.py "machine learning frameworks 2026" -n 10 --json
+python brave_search.py "machine learning frameworks 2026" -n 10 --json
 ```
 
 ### JSON Output Example
@@ -302,7 +302,7 @@ python linkup_search.py fetch "https://dynamic-site.com" --render-js --json
 ### Pattern 1: Search → Process Pipeline
 ```bash
 # 1) Get URLs from Brave Search
-urls=$(python search.py "python web scraping" -n 5 --json | jq -r '.results[].url')
+urls=$(python brave_search.py "python web scraping" -n 5 --json | jq -r '.results[].url')
 
 # 2) For each URL, fetch content with Linkup
 for u in $urls; do
@@ -532,7 +532,6 @@ python3 --version
 
 ### Step 1: Setup Virtual Environment
 ```bash
-cd /Users/ugo/tmp/ws
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
@@ -567,7 +566,7 @@ pip install -r requirements_linkup.txt
 ### Step 4: Verify Installation
 ```bash
 # Test Brave Search
-python search.py "test query" -n 3 --json
+python brave_search.py "test query" -n 3 --json
 
 # Test Linkup Search
 python linkup_search.py search "test query" -n 3 --json
@@ -707,7 +706,7 @@ def test_brave_search() -> bool:
     """Test Brave Search functionality."""
     print("Testing Brave Search...")
     
-    cmd = ['python', 'search.py', 'python tutorial', '-n', '3', '--json']
+    cmd = ['python', 'brave_search.py', 'python tutorial', '-n', '3', '--json']
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
     
     if result.returncode != 0:
@@ -818,13 +817,13 @@ python test_ai_search_skill.py
 
 ### Project Documentation
 - [Main README](./README.md)
-- [Brave Search Features](./FEATURES_SUMMARY.md)
-- [Linkup Search Features](./FEATURES_LINKUP.md)
-- [Project Overview](./PROJECT_SUMMARY.md)
-- [Bug Fixes](./FIX_APPLIED.md)
+- [Brave Search Features](./dev-doc/FEATURES_SUMMARY.md)
+- [Linkup Search Features](./dev-doc/FEATURES_LINKUP.md)
+- [Project Overview](./dev-doc/PROJECT_SUMMARY.md)
+- [Bug Fixes](./dev-doc/FIX_APPLIED.md)
 
 ### Integration Examples
-- [Example JSON Output Guide](./EXAMPLE_JSON_OUTPUT.md)
+- [Example JSON Output Guide](./dev-doc/EXAMPLE_JSON_OUTPUT.md)
 - [LangChain Integration](https://docs.langchain.com/)
 - [CrewAI Integration](https://docs.crewai.com/)
 
