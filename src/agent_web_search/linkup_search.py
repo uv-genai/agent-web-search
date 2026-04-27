@@ -394,7 +394,8 @@ def linkup_fetch(url, output_format="markdown", render_js=False, json_output=Fal
             sys.exit(1)
 
         data = response.json()
-        content = data.get("content", "")
+        # Linkup API returns content under 'markdown' key regardless of outputFormat
+        content = data.get("markdown", "")
 
         if json_output:
             output["content"] = content

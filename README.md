@@ -232,7 +232,7 @@ MIT License - See LICENSE file for details.
 ## 📦 Project Metadata
 
 - **Name**: agent-web-search
-- **Version**: 2.0.0
+- **Version**: 2.0.1
 - **Python**: >=3.9
 - **Build System**: hatchling
 - **Package Manager**: uv
