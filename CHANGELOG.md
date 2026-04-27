@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2026-04-27
+
+### Added
+- ✅ **HTML output for linkup fetch mode** — added `includeRawHtml` API parameter and response parsing to return raw HTML when `--output-format html` is specified
+
+---
+
 ## [2.0.1] - 2026-04-27
 
 ### Fixed

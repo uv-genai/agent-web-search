@@ -29,6 +29,7 @@ AI-specific agentic search with superior factuality (#1 on SimpleQA benchmark). 
 - ✅ JavaScript rendering support
 - ✅ Advanced filtering (dates, domains)
 - ✅ Markdown extraction from web pages
+- ✅ Raw HTML output from Linkup fetch
 
 ### Shared Features
 - ✅ Environment variable authentication
@@ -241,7 +242,7 @@ MIT License - See LICENSE file for details.
 ## 📦 Project Metadata
 
 - **Name**: agent-web-search
-- **Version**: 2.0.1
+- **Version**: 2.1.0
 - **Python**: >=3.9
 - **Build System**: hatchling
 - **Package Manager**: uv

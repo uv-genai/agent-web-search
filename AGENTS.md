@@ -1,6 +1,6 @@
 # Web Search Scripts - Project Documentation
 
-**Version:** 2.0.1  
+**Version:** 2.1.0  
 **Last Updated:** 2026-04-27  
 **License:** MIT
 
@@ -37,6 +37,7 @@ AI-specific agentic search with superior factuality (#1 on SimpleQA benchmark). 
 - ✅ **JavaScript rendering** support
 - ✅ **Advanced filtering** (dates, domains)
 - ✅ **Markdown extraction** from web pages
+- ✅ **Raw HTML output** (`--output-format html`) from Linkup fetch
 
 ### Shared Features
 - ✅ Environment variable authentication
@@ -199,6 +200,24 @@ def linkup_fetch(url, output_format='markdown', render_js=False):
 
 ## 📝 Changelog
 
+### Version 2.1.0 (2026-04-27)
+
+**Feature: HTML output for Linkup fetch mode**
+
+#### Added
+- ✅ **HTML output for linkup fetch** — when `--output-format html` is specified, the API sends `includeRawHtml=true` and returns raw HTML via the `"rawHtml"` response key
+
+#### Files Modified (v2.1.0)
+- `src/agent_web_search/linkup_search.py` — Added `includeRawHtml` parameter and conditional response parsing for HTML format
+
+### Version 2.0.2 (2026-04-27)
+
+**Bug Fixes: Email inconsistency and README structure**
+
+#### Fixed
+- 🐛 **Email inconsistency** — corrected `__email__` in `__init__.py` from `ugo@example.com` to `ugovaretto@gmail.com`
+- 🐛 **README project structure diagram** — updated from old `ws/` layout to actual `agent-web-search/` structure
+
 ### Version 2.0.1 (2026-04-27)
 
 **Bug Fix: Linkup fetch mode returning empty content**
@@ -343,8 +362,11 @@ uv run linkup-search search "AI trends 2026" --depth deep -n 10
 # JSON output
 uv run linkup-search search "python tutorials" -n 5 --json
 
-# Fetch webpage content
+# Fetch webpage content as markdown (default)
 uv run linkup-search fetch "https://docs.python.org"
+
+# Fetch webpage content as raw HTML
+uv run linkup-search fetch "https://docs.python.org" --output-format html
 
 # With filters
 uv run linkup-search search "machine learning" \

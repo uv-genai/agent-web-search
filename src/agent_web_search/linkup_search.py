@@ -356,6 +356,10 @@ def linkup_fetch(url, output_format="markdown", render_js=False, json_output=Fal
     if render_js:
         params["renderJS"] = True
 
+    # Include raw HTML when HTML format is requested
+    if output_format == "html":
+        params["includeRawHtml"] = True
+
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
@@ -394,8 +398,11 @@ def linkup_fetch(url, output_format="markdown", render_js=False, json_output=Fal
             sys.exit(1)
 
         data = response.json()
-        # Linkup API returns content under 'markdown' key regardless of outputFormat
-        content = data.get("markdown", "")
+        # Linkup API returns 'rawHtml' key when includeRawHtml=True, otherwise 'markdown'
+        if output_format == "html":
+            content = data.get("rawHtml", "")
+        else:
+            content = data.get("markdown", "")
 
         if json_output:
             output["content"] = content
