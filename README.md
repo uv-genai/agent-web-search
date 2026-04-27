@@ -71,6 +71,13 @@ AI-specific agentic search with superior factuality (#1 on SimpleQA benchmark). 
 - Need to fetch webpage content
 - Require structured data extraction
 
+## Coding agents
+
+Look here: [agent-web-search](https://github.com/uv-genai/skills/tree/main/agent-web-search)
+
+For a skill to enable coding agents to use this search toolkit.
+
+
 ## 🏗️ Project Structure
 
 ```
