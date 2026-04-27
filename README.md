@@ -74,19 +74,21 @@ AI-specific agentic search with superior factuality (#1 on SimpleQA benchmark). 
 ## 🏗️ Project Structure
 
 ```
-ws/
+agent-web-search/
 ├── pyproject.toml              # Project configuration with hatchling
+├── CHANGELOG.md                # Version history
 ├── README.md                   # Main documentation (this file)
+├── .env.example                # Environment variables template
+├── uv.lock                     # Lock file (auto-generated)
 ├── src/
 │   └── agent_web_search/
 │       ├── __init__.py         # Package initialization
 │       ├── brave_search.py     # Brave Search CLI tool
 │       └── linkup_search.py    # Linkup Search CLI tool
-├── tests/
-│   ├── __init__.py
-│   ├── test_brave_search.py    # Brave Search tests
-│   └── test_linkup_search.py   # Linkup Search tests
-└── .env.example                # Environment variables template
+└── tests/
+    ├── __init__.py
+    ├── test_brave_search.py    # Brave Search tests
+    └── test_linkup_search.py   # Linkup Search tests
 ```
 
 ## 🚀 Quick Start
